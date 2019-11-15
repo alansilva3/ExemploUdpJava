@@ -10,20 +10,13 @@ public class AppUDP1 {
     	    DatagramSocket socket = new DatagramSocket(10000);
             System.out.println("[OK] ]");
             
-            String msg = "Olá!!!";
-            
-            byte[] msg_buf = msg.getBytes();
-            int msg_size = msg_buf.length;
-            InetAddress destination_address = InetAddress.getLocalHost();
-            int destination_port = 20000; 
-
-            System.out.print("[ Montando datagrama UDP  ..................  ");
-            DatagramPacket pack = new DatagramPacket(msg_buf, msg_size, destination_address, destination_port);
-            System.out.println("[OK] ]");
-            
-            System.out.print("[ Enviando datagrama UDP  ..................  ");
-            socket.send(pack);
-            System.out.println("[OK] ]");
+            while (true) {
+                System.out.println();
+                String msg = Chat.writeMessage();
+                Chat.sendMessage(msg, 20000, socket);
+                
+                Chat.receiveMessage(socket); //Espera a resposta sempre
+            }
 
         } catch (Exception e){
             System.out.println(e.getMessage());
